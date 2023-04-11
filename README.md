@@ -1,4 +1,4 @@
-# stay_in
+# stayIn
 ## About
 StayIn is a homestay booking web application built to provide an efficient and user-friendly platform for users to book homestays for their vacations. The app has a frontend built using ReactJS and Tailwind CSS, while the backend is managed by Node.js, Express.js, and a MongoDB Atlas database. The app has a JWT token authorization system for user session management and a recommendation system that suggests places according to users' preferences.
 

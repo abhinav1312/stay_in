@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active{
+    background-color: #F5385D;
+    color: white !important;
+}
+
+input[type='text'], input[type='email'], input[type='password'], input[type='number'], input[type='password'], textarea{
+    @apply w-full border rounded-lg px-3 py-2 focus:outline-0;
+}
+
+button{
+    @apply bg-gray-400 px-4 py-2 rounded-lg 
+}
+
+button.primary{
+    background-color: #F5385D;
+    color: white;
+}
+
+.account-link{
+    @apply flex gap-2 py-2 px-4 border border-primary text-primary transition-all rounded-full;
+}
+
+.accomodationFormHeading{
+    @apply font-medium text-xl tracking-wide;
+}
+
+.accomodationFormSubheading{
+    @apply text-gray-400 lowercase mb-1;
+}

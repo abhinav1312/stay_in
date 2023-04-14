@@ -6,6 +6,7 @@ import Template from "./components/template/Template";
 import axios from 'axios';
 import UserState from "./context/UserState";
 import AccountPage from "./components/accountPage/AccountPage";
+import LoaderState from "./context/loader/LoaderState";
 
 axios.defaults.baseURL = 'http://localhost:4000'
 axios.defaults.withCredentials = true;
@@ -13,17 +14,19 @@ axios.defaults.withCredentials = true;
 function App() {
   return (
    <>
-   <UserState>
-    <Routes>
-      <Route path='/' element={<Template />}>
-        <Route index element={<IndexPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/account/:subpage?' element={<AccountPage />} />
-        <Route path='/account/:subpage/:action' element={<AccountPage />} />
-      </Route>
-    </Routes>
-   </UserState>
+   <LoaderState>
+    <UserState>
+      <Routes>
+        <Route path='/' element={<Template />}>
+          <Route index element={<IndexPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/account/:subpage?' element={<AccountPage />} />
+          <Route path='/account/:subpage/:action' element={<AccountPage />} />
+        </Route>
+      </Routes>
+    </UserState>
+   </LoaderState>
    </>
   );
 }

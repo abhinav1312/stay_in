@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 const accomodationSchema = new mongoose.Schema({
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     title: String,
-    address: String,
+    address: {
+        houseNo: String,
+        city: String,
+        state: String,
+        country: String
+    },
     photos: [String],
     perks: [String],
     description: String,
@@ -11,6 +16,7 @@ const accomodationSchema = new mongoose.Schema({
     checkIn: String,
     checkOut: String,
     maxGuests: Number,
+    pricePerNight: Number,
     createdAt: Date,
     updatedAt: Date
 });

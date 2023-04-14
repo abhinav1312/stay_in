@@ -17,7 +17,7 @@ const NewAccomodation = () => {
   const imageUpload = useRef();
   const {loader, setLoader} = useContext(LoaderContext);
   const [title, setTitle] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState({houseNo: '', city: '', state: '', country: ''});
   const [uploadedImages, setUploadedImages] = useState([]);
   const [maxGuests, setMaxGuests] = useState(0);
   const [ammenities, setAmmenities] = useState([]);
@@ -122,12 +122,16 @@ const NewAccomodation = () => {
     const titleCopy = title.trim().toLowerCase();
     const descriptionCopy = description.trim().toLowerCase();
     const extraInfoCopy = extraInfo.trim().toLowerCase();
-    const addressCopy = address.trim().toLowerCase();
-    if(titleCopy==='' || descriptionCopy==='' || ammenities.length===0 || extraInfoCopy==='' || uploadedImages.length===0 || addressCopy==='' || maxGuests===0 || checkIn==='' || checkOut===''){
+    const {country, state, city, houseNo} = address;
+    const stateCopy = state.trim().toLowerCase();
+    const countryCopy = country.trim().toLowerCase();
+    const cityCopy = city.trim().toLowerCase();
+    const houseNoCopy = houseNo.trim().toLowerCase();
+    if(titleCopy==='' || descriptionCopy==='' || ammenities.length===0 || extraInfoCopy==='' || uploadedImages.length===0 || countryCopy==='' || stateCopy==='' || cityCopy==='' ||houseNoCopy ==='' || maxGuests===0 || checkIn==='' || checkOut===''){
       alert("Please fill all the required fields");
       return;
     }
-
+    const addressCopy = {city: cityCopy, houseNo: houseNoCopy, state: stateCopy, country: countryCopy}
    const {data} = await axios.post('/upload_accomodation', {title: titleCopy, description: descriptionCopy, extraInfo: extraInfoCopy, address: addressCopy, maxGuests, photos:uploadedImages, checkIn, checkOut, ammenities});
    if(data) setRedirect('/account');
    setLoader(false);
@@ -136,8 +140,6 @@ const NewAccomodation = () => {
   };
 
   if(loader) return <Loader />
-
-
   if(redirect){
     return <Navigate to={redirect} />
   } 

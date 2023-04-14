@@ -89,6 +89,15 @@ app.get("/profile", (req, res) => {
   }
 });
 
+app.get('/accomodation_list', async(req, res)=>{
+  const {token} = req.cookies
+  jwt.verify(token, jwtSecret, {}, async (err, userData)=>{
+    if(err) throw err;
+    const userAccomodationList = await Accomodation.find({owner: userData.id})
+    res.json(userAccomodationList);
+  })
+})
+
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
@@ -104,6 +113,7 @@ app.post("/upload_by_link", async (req, res) => {
     });
     res.json(newName);
   } catch (error) {
+    console.log(error);
     res.status(404).json(null);
   }
 });
@@ -143,6 +153,7 @@ app.post("/upload_accomodation", (req, res) => {
   const {
     title,
     description,
+    address,
     ammenities,
     extraInfo,
     maxGuests,
@@ -160,6 +171,7 @@ app.post("/upload_accomodation", (req, res) => {
       const details = await Accomodation.create({
         owner: data.id,
         title,
+        address,
         description,
         perks: ammenities,
         extraInfo,

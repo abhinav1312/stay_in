@@ -8,7 +8,7 @@ import {
     WifiIcon,
   } from "../../../../images/SVG";
 
-const Ammenities = ({handleAmmenities}) => {
+const Ammenities = ({handleAmmenities, alreadySelected }) => {
   return (
     <div>
           <h2 className="accomodationFormHeading">
@@ -27,8 +27,10 @@ const Ammenities = ({handleAmmenities}) => {
                 id="airConditioner"
                 value="air conditioner"
                 className="h-4 w-4"
-                onChange={(e) =>
+                checked={alreadySelected.includes("air conditioner")}
+                onChange={(e) =>{
                   handleAmmenities(e.target.value, e.target.checked)
+                }
                 }
               />
               <span>Air Conditioner</span>
@@ -43,6 +45,7 @@ const Ammenities = ({handleAmmenities}) => {
                 id="wifi"
                 value="wifi"
                 className="h-4 w-4"
+                checked={alreadySelected.includes("wifi")}
                 onChange={(e) =>
                   handleAmmenities(e.target.value, e.target.checked)
                 }
@@ -59,6 +62,7 @@ const Ammenities = ({handleAmmenities}) => {
                 id="parking"
                 value="free parking spot"
                 className="h-4 w-4"
+                checked={alreadySelected.includes("free parking spot")}
                 onChange={(e) =>
                   handleAmmenities(e.target.value, e.target.checked)
                 }
@@ -75,6 +79,7 @@ const Ammenities = ({handleAmmenities}) => {
                 id="radio"
                 value="radio"
                 className="h-4 w-4"
+                checked={alreadySelected.includes("radio")}
                 onChange={(e) =>
                   handleAmmenities(e.target.value, e.target.checked)
                 }
@@ -88,6 +93,7 @@ const Ammenities = ({handleAmmenities}) => {
                 id="tv"
                 value="tv"
                 className="h-4 w-4"
+                checked={alreadySelected.includes("tv")}
                 onChange={(e) =>
                   handleAmmenities(e.target.value, e.target.checked)
                 }
@@ -104,6 +110,7 @@ const Ammenities = ({handleAmmenities}) => {
                 id="pets"
                 value="pets"
                 className="h-4 w-4"
+                checked={alreadySelected.includes("pets")}
                 onChange={(e) =>
                   handleAmmenities(e.target.value, e.target.checked)
                 }

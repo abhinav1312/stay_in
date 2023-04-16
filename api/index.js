@@ -156,7 +156,10 @@ app.post("/delete_img", (req, res) => {
       res.status(500).json(null);
     } else {
       fs.unlink(imgPath, (err) => {
-        res.status(200).json("Deleted successfully");
+        if(err){
+          res.status(500).json(null);
+        }
+        res.status(200).json("Deleted successfuly from folder")
       });
     }
   });
@@ -197,11 +200,57 @@ app.post("/upload_accomodation", (req, res) => {
       });
       res.json(details);
     } catch (error) {
-      console.log(error);
-      res.json(null);
+      res.status(500).json(null);
+      throw error;
     }
   });
 });
+
+app.post('/update_accomodation', (req, res)=>{
+  const {
+    id,
+    title,
+    description,
+    address,
+    perks,
+    extraInfo,
+    maxGuests,
+    checkIn,
+    checkOut,
+    photos,
+  } = req.body;
+  const {token} = req.cookies;
+  jwt.verify(token, jwtSecret, {}, async (err,userData)=>{
+    if(err){
+      res.json(null);
+      throw err;
+    }
+    else{
+      try{
+        const updatedDoc = await Accomodation.findByIdAndUpdate(
+          id,
+          { title,
+            description,
+            address,
+            perks,
+            extraInfo,
+            maxGuests,
+            checkIn,
+            checkOut,
+            photos
+          }, 
+          { new: true}
+        )
+        console.log(updatedDoc)
+        res.json(updatedDoc);
+      }
+      catch(error){
+        console.log(error);
+        res.json(null);
+      }
+    }
+  })
+})
 
 app.listen(4000, () => {
   console.log("Server listening on port 4000");

@@ -2,11 +2,8 @@ import React, { useContext } from 'react'
 import UserContext from '../../context/UserContext';
 import { NavLink, Navigate, useParams } from 'react-router-dom';
 import ProfilePage from './profile/ProfilePage';
-import AccomodaationPage from './accomodation/AccomodationPage';
-import { ListIcon } from './AccountPage';
-import { ProfileIcon2 } from './AccountPage';
-import { HouseIcon } from './AccountPage';
-export {ProfileIcon2, HouseIcon, ListIcon} from '../../images/SVG';
+import AccomodationPage from './accomodation/AccomodationPage';
+import {ProfileIcon2, HouseIcon, ListIcon} from '../../images/SVG';
 
 const AccountPage = () => {
   // const [redirect, setRedirect] = useState(null);
@@ -24,7 +21,7 @@ const AccountPage = () => {
       <NavLink to='/account/accomodations' className='account-link'> {HouseIcon} My Accomodations </NavLink>
     </nav>
      { subpage === undefined && <ProfilePage /> }
-     { subpage === 'accomodations' && <AccomodaationPage />} 
+     { subpage === 'accomodations' && <AccomodationPage />} 
     </>
   )
 }

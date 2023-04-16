@@ -1,6 +1,6 @@
 import React from "react";
 
-const CheckInCheckOut = ({ checkIn, setCheckIn, checkOut, setCheckOut }) => {
+const CheckInCheckOut = ({ checkIn, checkOut, handleEdit }) => {
   return (
     <div>
       <h2 className="accomodationFormHeading">
@@ -15,20 +15,20 @@ const CheckInCheckOut = ({ checkIn, setCheckIn, checkOut, setCheckOut }) => {
           <h2 className="font-semibold">Check-in time</h2>
           <input
             type="time"
-            name="checkin"
-            id="checkin"
+            name="checkIn"
+            id="checkIn"
             value={checkIn}
-            onChange={(e) => setCheckIn(e.target.value)}
+            onChange={handleEdit}
           />
         </div>
         <div className="flex gap-8 border p-4">
           <h2 className="font-semibold">Check-out time</h2>
           <input
             type="time"
-            name="checkout"
-            id="checkout"
+            name="checkOut"
+            id="checkOut"
             value={checkOut}
-            onChange={(e) => setCheckOut(e.target.value)}
+            onChange={handleEdit}
           />
         </div>
       </div>

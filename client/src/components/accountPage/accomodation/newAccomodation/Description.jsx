@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Description = ({description, setDescription}) => {
+const Description = ({description, handleEdit}) => {
   return (
     <div>
     <h2 className="accomodationFormHeading">
@@ -14,7 +14,7 @@ const Description = ({description, setDescription}) => {
       id="description"
       placeholder="A beautiful cottage residing in the heart of city..."
       value={description}
-      onChange={(e) => setDescription(e.target.value)}
+      onChange={handleEdit}
     />
   </div>
   )

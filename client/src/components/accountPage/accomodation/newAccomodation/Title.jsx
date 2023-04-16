@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Title = ({title, setTitle}) => {
+const Title = ({title, handleEdit}) => {
   return (
     <div>
           <h2 className="accomodationFormHeading">
@@ -15,7 +15,8 @@ const Title = ({title, setTitle}) => {
             id="title"
             placeholder="A serenic bungalow..."
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            // onChange={(e) => setTitle(e.target.value)}
+            onChange={handleEdit}
           />
         </div>
   )

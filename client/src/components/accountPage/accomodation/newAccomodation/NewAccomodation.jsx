@@ -16,35 +16,70 @@ import LoaderContext from "../../../../context/loader/LoaderContext";
 const NewAccomodation = () => {
   const imageUpload = useRef();
   const {loader, setLoader} = useContext(LoaderContext);
-  const [title, setTitle] = useState("");
-  const [address, setAddress] = useState({houseNo: '', city: '', state: '', country: ''});
   const [uploadedImages, setUploadedImages] = useState([]);
-  const [maxGuests, setMaxGuests] = useState(0);
-  const [ammenities, setAmmenities] = useState([]);
-  const [description, setDescription] = useState("");
-  const [extraInfo, setExtraInfo] = useState("");
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
   const [imgLink, setImgLink] = useState("");
   const [redirect, setRedirect] = useState(null);
+  const [accomodation, setAccomodation] = useState({
+    title: "",
+    description: "",
+    maxGuests: 0,
+    extraInfo: "",
+    address: {
+      city: "",
+      state: "",
+      houseNo: "",
+      country: ""
+    },
+    photos: [],
+    perks: [],
+    checkIn: "",
+    checkOut: ""
+  });
+
+  const handleEdit = (e) =>{
+    const {name, value} = e.target
+    if(name === 'houseNo' || name === 'city' || name === 'state' || name === 'country'){
+      const {state, city, houseNo, country} = accomodation.address
+      setAccomodation(prev=>{
+        return({
+          ...prev,
+          address: {
+            city, state, houseNo, country,
+            [name]: value
+          }
+        })
+      })
+    }
+    else{
+      setAccomodation(prev=>{
+        return {...prev, [name]: value}
+      })
+    }
+  }
 
 
   const handleImgLinkUpload = async () => {
     setLoader(true);
     if (imgLink === "") {
       alert("Please enter a valid link");
+      setLoader(false);
       return;
     }
     if(uploadedImages.length === 10){
       alert("Cannot add more than 10 images.");
+      setLoader(false);
       return;
     }
     try {
       const { data } = await axios.post("/upload_by_link", { imgLink });
       if(data){
-        setUploadedImages((prev) => {
-          return [...prev, data];
-        });
+        const photosCopy = accomodation.photos;
+        if(photosCopy.length > 0){
+          setAccomodation(prev=>{return {...prev, photos: [photosCopy, data]}})
+        }
+        else{
+          setAccomodation(prev=>{return {...prev, photos: [data]}})
+        }
         alert("Posted successfully");
       }
       else{
@@ -76,8 +111,9 @@ const NewAccomodation = () => {
       });
 
       alert("Upload successful!");
-      
-      setUploadedImages(prev => {return [...prev, ...data]});
+      const photosCopy = accomodation.photos;
+      setAccomodation(prev=>{return {...prev, photos: [photosCopy, ...data]}})
+      // setUploadedImages(prev => {return [...prev, ...data]});
     } catch (error) {
       alert("Error occured while uploading from file, please try again");
       console.log(error)
@@ -109,15 +145,22 @@ const NewAccomodation = () => {
 
   const handleAmmenities = (value, isChecked) => {
     if (isChecked) {
-      setAmmenities([...ammenities, value]);
+      const perksArrayCopy = accomodation.perks
+      setAccomodation(prev=>{
+        return { ...prev, perks: [...perksArrayCopy, value]}
+      })
     } else {
-      setAmmenities(ammenities.filter((v) => v !== value));
+      const perksArrayCopy = accomodation.perks.filter(perks=> perks !== value);
+      setAccomodation(prev=>{
+        return { ...prev, perks: [...perksArrayCopy]}
+      })
     }
   };
 
   const handleAccomodationUpload = async (e) => {
     e.preventDefault();
     setLoader(true);
+    const {title, description, extraInfo, address, checkIn, checkOut, maxGuests} = accomodation;
 
     const titleCopy = title.trim().toLowerCase();
     const descriptionCopy = description.trim().toLowerCase();
@@ -127,12 +170,13 @@ const NewAccomodation = () => {
     const countryCopy = country.trim().toLowerCase();
     const cityCopy = city.trim().toLowerCase();
     const houseNoCopy = houseNo.trim().toLowerCase();
-    if(titleCopy==='' || descriptionCopy==='' || ammenities.length===0 || extraInfoCopy==='' || uploadedImages.length===0 || countryCopy==='' || stateCopy==='' || cityCopy==='' ||houseNoCopy ==='' || maxGuests===0 || checkIn==='' || checkOut===''){
+    if(titleCopy==='' || descriptionCopy==='' || accomodation.perks.length===0 || extraInfoCopy==='' || accomodation.photos.length===0 || countryCopy==='' || stateCopy==='' || cityCopy==='' ||houseNoCopy ==='' || maxGuests===0 || checkIn==='' || checkOut===''){
       alert("Please fill all the required fields");
+      setLoader(false);
       return;
     }
     const addressCopy = {city: cityCopy, houseNo: houseNoCopy, state: stateCopy, country: countryCopy}
-   const {data} = await axios.post('/upload_accomodation', {title: titleCopy, description: descriptionCopy, extraInfo: extraInfoCopy, address: addressCopy, maxGuests, photos:uploadedImages, checkIn, checkOut, ammenities});
+   const {data} = await axios.post('/upload_accomodation', {title: titleCopy, description: descriptionCopy, extraInfo: extraInfoCopy, address: addressCopy, maxGuests, photos:accomodation.photos, checkIn, checkOut, perks: accomodation.perks});
    if(data) setRedirect('/account');
    setLoader(false);
    alert("Accomodation uploaded successfully")
@@ -148,15 +192,14 @@ const NewAccomodation = () => {
     <>
       <div className="lg:w-2/3 mx-auto">
         <form onSubmit={handleAccomodationUpload} className="flex flex-col gap-8">
-          <Title title={title} setTitle={setTitle} />
-          <Address address={address} setAddress={setAddress} />
+          <Title title={accomodation.title} handleEdit={handleEdit} />
+          <Address address={accomodation.address} handleEdit={handleEdit} />
           <Ammenities handleAmmenities={handleAmmenities} />
-          <MaxGuests maxGuests={maxGuests} setMaxGuests={setMaxGuests}/>
-          <ImageUpload setImgLink={setImgLink} imgLink={imgLink} handleImageUpload={handleImageUpload} handleImgLinkUpload={handleImgLinkUpload} imageUpload={imageUpload} removeImg={removeImg} uploadedImages={uploadedImages} />
-          <Description description={description} setDescription={setDescription} />
-          <ExtraInfo extraInfo={extraInfo} setExtraInfo={setExtraInfo} />
-          <CheckInCheckOut checkIn={checkIn} checkOut={checkOut} setCheckIn={setCheckIn} setCheckOut={setCheckOut} />
-
+          <MaxGuests maxGuests={accomodation.maxGuests} handleEdit={handleEdit}/>
+          <ImageUpload setImgLink={setImgLink} imgLink={imgLink} handleImageUpload={handleImageUpload} handleImgLinkUpload={handleImgLinkUpload} imageUpload={imageUpload} removeImg={removeImg} uploadedImages={accomodation.photos} />
+          <Description description={accomodation.description} handleEdit={handleEdit} />
+          <ExtraInfo extraInfo={accomodation.extraInfo} handleEdit={handleEdit} />
+          <CheckInCheckOut checkIn={accomodation.checkIn} checkOut={accomodation.checkOut} handleEdit={handleEdit} />
           <button type="submit" value="submit" className="primary">
             Submit
           </button>

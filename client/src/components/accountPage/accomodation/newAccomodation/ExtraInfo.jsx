@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExtraInfo = ({ extraInfo, setExtraInfo }) => {
+const ExtraInfo = ({ extraInfo, handleEdit }) => {
   return (
     <div>
       <h2 className="accomodationFormHeading">
@@ -13,7 +13,7 @@ const ExtraInfo = ({ extraInfo, setExtraInfo }) => {
         name="extraInfo"
         id="extraInfo"
         value={extraInfo}
-        onChange={(e) => setExtraInfo(e.target.value)}
+        onChange={handleEdit}
       />
     </div>
   );

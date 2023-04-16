@@ -1,15 +1,15 @@
 import React from "react";
 
-const Address = ({ address, setAddress }) => {
-  const handleAddress = (e) => {
-    const { name, value } = e.target;
-    setAddress((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
+const Address = ({ address, handleEdit}) => {
+  // const handleAddress = (e) => {
+  //   const { name, value } = e.target;
+  //   setAddress((prev) => {
+  //     return {
+  //       ...prev,
+  //       [name]: value,
+  //     };
+  //   });
+  // };
   return (
     <div>
       <h2 className="accomodationFormHeading">
@@ -26,7 +26,7 @@ const Address = ({ address, setAddress }) => {
           id="houseNo"
           placeholder="Enter house no."
           value={address.houseNo}
-          onChange={handleAddress}
+          onChange={handleEdit}
         />
         <input
           type="text"
@@ -34,7 +34,7 @@ const Address = ({ address, setAddress }) => {
           id="city"
           placeholder="Enter city"
           value={address.city}
-          onChange={handleAddress}
+          onChange={handleEdit}
         />
         <input
           type="text"
@@ -42,7 +42,7 @@ const Address = ({ address, setAddress }) => {
           id="state"
           placeholder="Enter state"
           value={address.state}
-          onChange={handleAddress}
+          onChange={handleEdit}
         />
         <input
           type="text"
@@ -50,7 +50,7 @@ const Address = ({ address, setAddress }) => {
           id="country"
           placeholder="Enter country"
           value={address.country}
-          onChange={handleAddress}
+          onChange={handleEdit}
         />
       </div>
     </div>

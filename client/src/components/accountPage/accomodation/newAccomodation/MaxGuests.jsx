@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MaxGuests = ({maxGuests, setMaxGuests}) => {
+const MaxGuests = ({maxGuests, handleEdit}) => {
   return (
   
     <div>
@@ -12,12 +12,12 @@ const MaxGuests = ({maxGuests, setMaxGuests}) => {
     </p>
     <input
       type="number"
-      name="maxGuest"
-      id="maxGuest"
+      name="maxGuests"
+      id="maxGuests"
       placeholder="Enter max no. of guests allowed"
       className="w-full"
       value={maxGuests}
-      onChange={(e) => setMaxGuests(e.target.value)}
+      onChange={handleEdit}
     />
   </div>
   )

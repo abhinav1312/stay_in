@@ -8,7 +8,7 @@ import {
     WifiIcon,
   } from "../../../../images/SVG";
 
-const Ammenities = ({handleAmmenities, }) => {
+const Ammenities = ({handleAmmenities}) => {
   return (
     <div>
           <h2 className="accomodationFormHeading">

@@ -7,6 +7,7 @@ import axios from 'axios';
 import UserState from "./context/UserState";
 import AccountPage from "./components/accountPage/AccountPage";
 import LoaderState from "./context/loader/LoaderState";
+import AccomodationListChild from "./components/accountPage/accomodation/accomodationList/AccomodationListChild";
 
 axios.defaults.baseURL = 'http://localhost:4000'
 axios.defaults.withCredentials = true;
@@ -23,6 +24,7 @@ function App() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/account/:subpage?' element={<AccountPage />} />
           <Route path='/account/:subpage/:action' element={<AccountPage />} />
+          <Route path='/account/accomodations/accomodation_list/:id' element={<AccomodationListChild />} />
         </Route>
       </Routes>
     </UserState>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { startCase } from 'lodash';
 
 const AccomodationList = () => {
-
+    const {pathname} = useLocation();
+    console.log(pathname)
     const [accomodations, setAccomodations] = useState([]);
     useEffect(()=>{
         const fetchAccomodationList = async () => {
@@ -15,8 +17,6 @@ const AccomodationList = () => {
 
     }, [])
 
-    const desc = "Jannat blends the most luxurious backdrop of your fantasy with nature’s incredible marvels to create a tranquil utopia that caters to your comfort where Breakfast is complimentary! This 3Bed pool villa in Nashik is a hidden paradise waiting to dazzle you with its tranquil charm.Surrounded by nature as far as the eyes can see,the open lawns within the premises give you all the space you need to take a refreshing walk,practice your morning asanas or indulge your kids in a fun game of catch&cook. This villa offers 3 spacious bedrooms and ensuite bathrooms in 2 bedrooms, giving you ample space to have a luxurious getaway from the congested city life. With an elderly-friendly approach in mind, 1 bedroom of the villa is situated on the ground level, where your elderly parents can rest in comfort without having to make their way up the stairs."
-    let size=120;
   return (
     // <div className='min-h-screen grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
     //   <div className="w-full h-80 rounded-full transition-all hover:scale-105">
@@ -32,15 +32,19 @@ const AccomodationList = () => {
     <div className='min-h-screen'>
       { accomodations.length>0 &&
         accomodations.map(accomodation=>{
-          let {title, description} = accomodation;
-          title = title[0].toUpperCase() + title.substring(1);
+          let {title, description, photos} = accomodation;
+          let photo = photos[0];
+          console.log(photo)
+          title = startCase(title);
           return (
-          <Link to={'/account/accomodation/accomodation_list/' + 1234} className=" flex gap-4 w-full bg-gray-300 p-4 rounded-2xl">
-          <div className="h-32 w-32 bg-gray-500 grow-1 shrink-0"></div>
+          <Link key={accomodation._id} to={pathname + '/' + accomodation._id} className=" flex gap-4 w-full bg-gray-300 p-4 rounded-2xl">
+          <div className="h-32 w-48 grow-1 shrink-0">
+            <img src={'http://localhost:4000/uploads/' + photo} alt="accomodation" />
+          </div>
           <div className='grow-0'>
             <h2 className='text-xl font-medium'>{title}</h2>
             <p className='text-justify mt-2'>
-              {desc.substring(0, 200) + "......"}
+              {description.substring(0, 500) + "......"}
             </p>
           </div>
         </Link>

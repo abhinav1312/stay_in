@@ -98,6 +98,19 @@ app.get('/accomodation_list', async(req, res)=>{
   })
 })
 
+app.get('/accomodation_list/:id', (req, res)=>{
+  const {id} = req.params;
+  const {token} = req.cookies;
+  jwt.verify(token, jwtSecret, {}, async (err, userData)=>{
+    if(err){
+      // res.json(null);
+      throw err;
+    };
+    const accomodationData = await Accomodation.find({owner: userData.id, _id: id})
+    res.json(accomodationData);
+  })
+})
+
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });

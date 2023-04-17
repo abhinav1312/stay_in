@@ -57,7 +57,8 @@ const ImageUpload = ({setImgLink, imgLink, handleImageUpload, handleImgLinkUploa
                   {CancelIcon}
                 </button>
                 <img
-                  src={"http://localhost:4000/uploads/" + uploadImage}
+                  // src={"http://localhost:4000/uploads/" + uploadImage}
+                  src={uploadImage}
                   alt="test"
                   className="h-44 flex w-full object-cover"
                 />

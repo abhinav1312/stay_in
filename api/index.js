@@ -10,6 +10,22 @@ const imageDownloader = require("image-downloader");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+const { getStorage } = require('firebase/storage');
+const { ref, getDownloadURL, uploadBytesResumable } = require('firebase/storage');
+// import { initializeApp } from "firebase/app";
+const {initializeApp} = require('firebase/app')
+// import config from './firebaseConfig'
+const config = require('./firebaseConfig');
+// initialize firebase configuration
+initializeApp(config.firebaseConfig);
+
+// initialize cloud storage
+const storage = getStorage();
+
+// multer as middleware to grab photo uploads
+const upload = multer({storage: multer.memoryStorage()})
+
+
 require("dotenv").config();
 const app = express();
 
@@ -135,18 +151,47 @@ app.post("/upload_by_link", async (req, res) => {
   }
 });
 
+// app.post(
+//   "/upload_by_img",
+//   photoMiddleware.array("photos", 100),
+//   async (req, res) => {
+//     const uploadedFiles = [];
+//     for (let i = 0; i < req.files.length; i++) {
+//       const { path, originalname } = req.files[i];
+//       console.log("Path: ", path, "  Original NAme: ", originalname)
+//       const parts = originalname.split(".");
+//       const ext = parts[parts.length - 1];
+//       const newPath = path + "." + ext;
+//       fs.renameSync(path, newPath);
+//       uploadedFiles.push(newPath.replace("uploads/", ""));
+//     }
+//     res.json(uploadedFiles);
+//   }
+// );
+
 app.post(
   "/upload_by_img",
-  photoMiddleware.array("photos", 100),
+  upload.array("photos", 100),
   async (req, res) => {
     const uploadedFiles = [];
     for (let i = 0; i < req.files.length; i++) {
-      const { path, originalname } = req.files[i];
-      const parts = originalname.split(".");
-      const ext = parts[parts.length - 1];
-      const newPath = path + "." + ext;
-      fs.renameSync(path, newPath);
-      uploadedFiles.push(newPath.replace("uploads/", ""));
+      const { originalname } = req.files[i];
+      let newName = originalname.replace(/\s/g, "").toLowerCase();
+      newName = newName.split('.');
+      newName = newName[0]+Date.now();
+      console.log("NewNAmeL ",newName);
+      const storageRef = ref(storage, `files/${newName}`)
+      // create file metadata including content-type
+      const metadata = { contentType: req.files[i].mimetype }
+      //upload
+      const snapshot = await uploadBytesResumable(storageRef, req.files[i].buffer, metadata);
+
+      // dowloadURL 
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      
+      // fs.renameSync(path, newPath);
+      uploadedFiles.push(downloadURL);
+      console.log("DownloadURL: ", downloadURL)
     }
     res.json(uploadedFiles);
   }

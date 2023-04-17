@@ -120,9 +120,10 @@ const NewAccomodation = () => {
       imgData.append('photos', files[i-accomodation.photos.length]);
     }
     try {
-      const { data } = await axios.post("/upload_by_img", imgData, {
+      const {data}  = await axios.post("/upload_by_img", imgData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      console.log("Data: ", data);
       alert("Upload successful!");
       const photosCopy = accomodation.photos;
       if(photosCopy.length > 0){

@@ -11,6 +11,7 @@ import CheckInCheckOut from "./CheckInCheckOut";
 import { Navigate, useParams } from "react-router-dom";
 import Loader from "../../../loader/Loader";
 import LoaderContext from "../../../../context/loader/LoaderContext";
+import PricePerNight from "./PricePerNight";
 
 
 const NewAccomodation = () => {
@@ -30,6 +31,7 @@ const NewAccomodation = () => {
       houseNo: "",
       country: ""
     },
+    pricePerNight: 0,
     photos: [],
     perks: [],
     checkIn: "",
@@ -179,7 +181,7 @@ const NewAccomodation = () => {
   const handleAccomodationUpload = async (e) => {
     e.preventDefault();
     setLoader(true);
-    const {title, description, extraInfo, address, checkIn, checkOut, maxGuests} = accomodation;
+    const {title, description, extraInfo, address, checkIn, checkOut, pricePerNight, maxGuests} = accomodation;
 
     const titleCopy = title.trim().toLowerCase();
     const descriptionCopy = description.trim().toLowerCase();
@@ -189,7 +191,7 @@ const NewAccomodation = () => {
     const countryCopy = country.trim().toLowerCase();
     const cityCopy = city.trim().toLowerCase();
     const houseNoCopy = houseNo.trim().toLowerCase();
-    if(titleCopy==='' || descriptionCopy==='' || accomodation.perks.length===0 || extraInfoCopy==='' || accomodation.photos.length===0 || countryCopy==='' || stateCopy==='' || cityCopy==='' ||houseNoCopy ==='' || maxGuests===0 || checkIn==='' || checkOut===''){
+    if(titleCopy==='' || descriptionCopy==='' || accomodation.perks.length===0 || extraInfoCopy==='' || accomodation.photos.length===0 || countryCopy==='' || stateCopy==='' || cityCopy==='' ||houseNoCopy ==='' || maxGuests===0 || checkIn==='' || checkOut==='' || pricePerNight===0){
       alert("Please fill all the required fields");
       setLoader(false);
       return;
@@ -198,7 +200,7 @@ const NewAccomodation = () => {
    if(id){
     try{
       setLoader(true);
-      const {data} = await axios.post('/update_accomodation', {id,title: titleCopy, description: descriptionCopy, extraInfo: extraInfoCopy, address: addressCopy, maxGuests, photos:accomodation.photos, checkIn, checkOut, perks: accomodation.perks});
+      const {data} = await axios.post('/update_accomodation', {id,title: titleCopy, description: descriptionCopy, extraInfo: extraInfoCopy, address: addressCopy, maxGuests, photos:accomodation.photos, checkIn, checkOut, perks: accomodation.perks, pricePerNight});
         if(data) setRedirect('/account');
         alert("Accomodation updated successfully")
     }
@@ -213,7 +215,7 @@ const NewAccomodation = () => {
    else{
     try{
       setLoader(true);
-      const {data} = await axios.post('/upload_accomodation', {title: titleCopy, description: descriptionCopy, extraInfo: extraInfoCopy, address: addressCopy, maxGuests, photos:accomodation.photos, checkIn, checkOut, perks: accomodation.perks});
+      const {data} = await axios.post('/upload_accomodation', {title: titleCopy, description: descriptionCopy, extraInfo: extraInfoCopy, address: addressCopy, maxGuests, photos:accomodation.photos, checkIn, checkOut, perks: accomodation.perks, pricePerNight});
       if(data) setRedirect('/account');
       alert("Accomodation uploaded successfully")
     }
@@ -241,6 +243,7 @@ const NewAccomodation = () => {
           <Address address={accomodation.address} handleEdit={handleEdit} />
           <Ammenities handleAmmenities={handleAmmenities} alreadySelected={accomodation.perks} />
           <MaxGuests maxGuests={accomodation.maxGuests} handleEdit={handleEdit}/>
+          <PricePerNight pricePerNight={accomodation.pricePerNight} handleEdit={handleEdit} />
           <ImageUpload setImgLink={setImgLink} imgLink={imgLink} handleImageUpload={handleImageUpload} handleImgLinkUpload={handleImgLinkUpload} imageUpload={imageUpload} removeImg={removeImg} uploadedImages={accomodation.photos} />
           <Description description={accomodation.description} handleEdit={handleEdit} />
           <ExtraInfo extraInfo={accomodation.extraInfo} handleEdit={handleEdit} />

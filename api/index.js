@@ -46,6 +46,10 @@ app.get("/test", (req, res) => {
 // gLQorHVhYwkP3nr9
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
+  const userSnapShot = await User.find({email})
+  if(userSnapShot){
+    res.json(null);
+  }
   const userDoc = await User.create({
     name,
     email,
@@ -176,6 +180,7 @@ app.post("/upload_accomodation", (req, res) => {
     checkIn,
     checkOut,
     photos,
+    pricePerNight
   } = req.body;
   const { token } = req.cookies;
   jwt.verify(token, jwtSecret, {}, async (err, data) => {
@@ -195,6 +200,7 @@ app.post("/upload_accomodation", (req, res) => {
         checkIn,
         checkOut,
         photos,
+        pricePerNight,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -218,6 +224,7 @@ app.post('/update_accomodation', (req, res)=>{
     checkIn,
     checkOut,
     photos,
+    pricePerNight
   } = req.body;
   const {token} = req.cookies;
   jwt.verify(token, jwtSecret, {}, async (err,userData)=>{
@@ -237,7 +244,9 @@ app.post('/update_accomodation', (req, res)=>{
             maxGuests,
             checkIn,
             checkOut,
-            photos
+            photos,
+            pricePerNight,
+            updatedAt: new Date()
           }, 
           { new: true}
         )

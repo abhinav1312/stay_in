@@ -22,14 +22,18 @@ const RegisterPage = () => {
   const registerUser = async  (e) => {
     e.preventDefault();
     try{
-      await axios.post('/register', {
+      const {data} = await axios.post('/register', {
         name: userDetail.name,
         email: userDetail.email,
         password: userDetail.password
       })
-      alert("User added successfully!")
+      if(!data) alert("User already exists.")
+      else{
+        alert("User added successfully!")
+      }
     }
     catch(error) {console.log(error); alert("Something went wrong, please try registering again")}
+    finally{setUserDetail({name: '', email: '', password: ''})};
   }
 
   return (

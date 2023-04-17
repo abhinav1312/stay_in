@@ -27,8 +27,8 @@ const AccomodationList = () => {
           title = startCase(title);
           return (
           <Link key={accomodation._id} to={pathname + '/' + accomodation._id} className=" flex gap-4 w-full bg-gray-300 p-4 rounded-2xl">
-          <div className="h-32 w-48 grow-1 shrink-0">
-            <img src={'http://localhost:4000/uploads/' + photo} alt="accomodation" />
+          <div className="flex h-32 w-48 grow-1 shrink-0">
+            <img className="object-cover" src={'http://localhost:4000/uploads/' + photo} alt="accomodation" />
           </div>
           <div className='grow-0'>
             <h2 className='text-xl font-medium'>{title}</h2>

@@ -23,7 +23,6 @@ const AccomodationList = () => {
         accomodations.map(accomodation=>{
           let {title, description, photos} = accomodation;
           let photo = photos[0];
-          console.log(photo)
           title = startCase(title);
           return (
           <Link key={accomodation._id} to={pathname + '/' + accomodation._id} className=" flex gap-4 w-full bg-gray-300 p-4 rounded-2xl">

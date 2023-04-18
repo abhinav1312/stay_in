@@ -55,6 +55,18 @@ mongoose
     console.log(("Connection unsuccessfull", err));
   });
 
+app.get('/', async(req, res)=>{
+  try{
+    const allAccomodations = await Accomodation.find();
+    res.json(allAccomodations);
+  }
+  catch(error){
+    console.log(error);
+    console.log("Some error occured");
+    res.json(null);
+  }
+})
+
 app.get("/test", (req, res) => {
   res.json("Test ok");
 });
@@ -151,51 +163,51 @@ app.post("/upload_by_link", async (req, res) => {
   }
 });
 
-// app.post(
-//   "/upload_by_img",
-//   photoMiddleware.array("photos", 100),
-//   async (req, res) => {
-//     const uploadedFiles = [];
-//     for (let i = 0; i < req.files.length; i++) {
-//       const { path, originalname } = req.files[i];
-//       console.log("Path: ", path, "  Original NAme: ", originalname)
-//       const parts = originalname.split(".");
-//       const ext = parts[parts.length - 1];
-//       const newPath = path + "." + ext;
-//       fs.renameSync(path, newPath);
-//       uploadedFiles.push(newPath.replace("uploads/", ""));
-//     }
-//     res.json(uploadedFiles);
-//   }
-// );
-
 app.post(
   "/upload_by_img",
-  upload.array("photos", 100),
+  photoMiddleware.array("photos", 100),
   async (req, res) => {
     const uploadedFiles = [];
     for (let i = 0; i < req.files.length; i++) {
-      const { originalname } = req.files[i];
-      let newName = originalname.replace(/\s/g, "").toLowerCase();
-      newName = newName.split('.');
-      newName = newName[0]+Date.now();
-      console.log("NewNAmeL ",newName);
-      const storageRef = ref(storage, `files/${newName}`)
-      // create file metadata including content-type
-      const metadata = { contentType: req.files[i].mimetype }
-      //upload
-      const snapshot = await uploadBytesResumable(storageRef, req.files[i].buffer, metadata);
-
-      // dowloadURL 
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      
-      // fs.renameSync(path, newPath);
-      uploadedFiles.push(downloadURL);
-      console.log("DownloadURL: ", downloadURL)
+      const { path, originalname } = req.files[i];
+      console.log("Path: ", path, "  Original NAme: ", originalname)
+      const parts = originalname.split(".");
+      const ext = parts[parts.length - 1];
+      const newPath = path + "." + ext;
+      fs.renameSync(path, newPath);
+      uploadedFiles.push(newPath.replace("uploads/", ""));
     }
     res.json(uploadedFiles);
   }
 );
+
+// app.post(
+//   "/upload_by_img",
+//   upload.array("photos", 100),
+//   async (req, res) => {
+//     const uploadedFiles = [];
+//     for (let i = 0; i < req.files.length; i++) {
+//       const { originalname } = req.files[i];
+//       let newName = originalname.replace(/\s/g, "").toLowerCase();
+//       newName = newName.split('.');
+//       newName = newName[0]+Date.now();
+//       console.log("NewNAmeL ",newName);
+//       const storageRef = ref(storage, `files/${newName}`)
+//       // create file metadata including content-type
+//       const metadata = { contentType: req.files[i].mimetype }
+//       //upload
+//       const snapshot = await uploadBytesResumable(storageRef, req.files[i].buffer, metadata);
+
+//       // dowloadURL 
+//       const downloadURL = await getDownloadURL(snapshot.ref);
+      
+//       // fs.renameSync(path, newPath);
+//       uploadedFiles.push(downloadURL);
+//       console.log("DownloadURL: ", downloadURL)
+//     }
+//     res.json(uploadedFiles);
+//   }
+// );
 
 app.post("/delete_img", (req, res) => {
   const { filename } = req.body;

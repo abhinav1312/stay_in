@@ -1,3 +1,5 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -30,4 +32,51 @@ button.primary{
 
 .accomodationFormSubheading{
     @apply text-gray-400 lowercase mb-1;
+}
+
+.accomodationCards{
+    display: grid !important;
+    gap: 1rem ;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    @apply mt-12;
+}
+
+.image-gallery-svg{
+    transform: scale(0.5) !important;
+}
+
+
+button.image-gallery-icon, .image-gallery-index {
+    opacity: 0 !important;
+    padding: 0 !important;
+}
+
+.image-gallery-index{
+    height: 2rem;
+}
+
+button.image-gallery-icon>svg{
+    stroke-width: 2 !important;
+}
+
+.accomodationCard:hover .image-gallery-index, .accomodationCard:hover button.image-gallery-icon{
+    opacity: 1 !important;
+}
+
+.image-gallery-play-button, .image-gallery-fullscreen-button{
+    scale: 1.25 !important;
+}
+
+.image-gallery,.image-gallery-content, .image-gallery-slide-wrapper, .image-gallery-swipe, .image-gallery-slides, .image-gallery-slide, .image-gallery-image{
+    height: 100%;
+}
+.image-gallery-index{
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem !important;
+}
+
+.image-gallery-image{
+    object-fit: cover !important;
 }

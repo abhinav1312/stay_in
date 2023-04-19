@@ -37,7 +37,7 @@ button.primary{
 .accomodationCards{
     display: grid !important;
     gap: 1rem ;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
     @apply mt-12;
 }
 

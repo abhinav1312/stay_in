@@ -14,7 +14,7 @@ const SingleAccomodation = () => {
         try{
           const {data} = await (axios.get(`/accomodation/${id}`));
           const {title, description, perks, pricePerNight, extraInfo, address, checkIn, checkOut, maxGuests, photos} = data;
-          setAccomodation({title, description, perks, pricePerNight, extraInfo, address, checkIn, checkOut, maxGuests, photos});
+          setAccomodation({id, title, description, perks, pricePerNight, extraInfo, address, checkIn, checkOut, maxGuests, photos});
         }catch(error){
           console.log(error);
           alert("Some error occured while loading the accomodation, please refresh the page")
@@ -57,7 +57,7 @@ const SingleAccomodation = () => {
         </div>
       </div>
 
-      <Link to={'/:id/photos'} className="grid grid-cols-[2fr_1fr_1fr] grid-rows-2">
+      <Link to={`/${accomodation.id}/photos`} className="grid grid-cols-[2fr_1fr_1fr] grid-rows-2 py-4">
         <div className='row-span-2 mr-2 my-0'>
           <img className='h-full w-full object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
         </div>

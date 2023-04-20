@@ -13,6 +13,7 @@ import ProfilePage from "./components/accountPage/profile/ProfilePage";
 import AccomodationPage from "./components/accountPage/accomodation/AccomodationPage";
 import AccomodationList from "./components/accountPage/accomodation/accomodationList/AccomodationList";
 import SingleAccomodation from "./components/singlePageAccomodation/SingleAccomodation";
+import PhotoGallery from "./components/singlePageAccomodation/PhotoGallery";
 
 axios.defaults.baseURL = 'http://localhost:4000'
 axios.defaults.withCredentials = true;
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Template />}>
           <Route path=':id' element = {<SingleAccomodation />} />
+          <Route path=':id/photos' element = {<PhotoGallery />} />
           <Route index element={<IndexPage />} />
           <Route path='login' element={<LoginPage />} />
           <Route path='register' element={<RegisterPage />} />

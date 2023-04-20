@@ -143,6 +143,20 @@ app.get('/accomodation_list/:id', (req, res)=>{
   })
 })
 
+app.get('/accomodation/:id', async (req, res)=>{
+  const {id} = req.params;
+  console.log(id);
+  try{
+    const accomodationDoc = await Accomodation.findById(id);
+    res.json(accomodationDoc);
+  }
+  catch(err){
+    res.json(null);
+    console.log(err);
+    console.log("Error occured");
+  }
+})
+
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });

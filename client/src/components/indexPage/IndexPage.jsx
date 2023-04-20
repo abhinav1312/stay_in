@@ -8,7 +8,6 @@ const IndexPage = () => {
   useEffect(()=>{
     const getAccomodations = async () => {
       try{
-
         const {data} = await axios.get('/');
         setAccomodations(data);
       }catch(err){

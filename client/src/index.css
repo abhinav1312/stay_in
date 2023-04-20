@@ -14,7 +14,7 @@ input[type='text'], input[type='email'], input[type='password'], input[type='num
 }
 
 button{
-    @apply bg-gray-400 px-4 py-2 rounded-lg 
+    @apply px-6 py-2 rounded-lg transition-all;
 }
 
 button.primary{

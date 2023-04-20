@@ -24,11 +24,11 @@ const PhotoGallery = () => {
 
   console.log(photos);
 
-  if(!photos) return <div>No photos</div>
+  if(!photos) return <div> No photos </div>
   return (
     <div className="py-6">
-      <div className="flex justify-between">
-        <button onClick={()=>navigate(-1)}>
+      <div className="flex justify-between bg-white sticky top-0 py-4">
+        <button className="shadow-md hover:bg-gray-100" onClick={()=>navigate(-1)}>
           {LeftArrowIcon}
         </button>
         <div className="flex gap-8">

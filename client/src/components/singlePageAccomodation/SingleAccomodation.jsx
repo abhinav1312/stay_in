@@ -62,16 +62,16 @@ const SingleAccomodation = () => {
           <img className='h-full w-full object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
         </div>
         <div className='mb-1 mr-1'>
-          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
+          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[1]}`} alt="" />
         </div>
         <div className='ml-1 mb-1'>
-          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
+          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[2]}`} alt="" />
         </div>
         <div className='col-start-2 mt-1 mr-1'>
-          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
+          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[3]}`} alt="" />
         </div>
         <div className='ml-1 mt-1'>
-          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
+          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[4]}`} alt="" />
         </div>
       </Link>
     </div>

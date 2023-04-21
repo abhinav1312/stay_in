@@ -3,32 +3,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import { LeftArrowIcon, ShareIcon, WishlistIcon } from "../../images/SVG";
 import axios from "axios";
 
-const PhotoGallery = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [photos, setPhotos] = useState()
-  useEffect(()=>{
-    const getPhotos = async() => {
-      if(!id) return;
-      try{
-        const {data} = await axios.get(`/accomodation/${id}`);
-        setPhotos([...data.photos]);
-      }
-      catch(error){
-        console.log(error);
-        alert("Error occured while fetching photos. Please refresh again.")
-      }
-    }
-    getPhotos();
-  }, [id])
+const PhotoGallery = ({photos, setShowAllPhotos}) => {
+  // const { id } = useParams();
+  // const navigate = useNavigate();
+  // const [photos, setPhotos] = useState()
+  // useEffect(()=>{
+  //   const getPhotos = async() => {
+  //     if(!id) return;
+  //     try{
+  //       const {data} = await axios.get(`/accomodation/${id}`);
+  //       setPhotos([...data.photos]);
+  //     }
+  //     catch(error){
+  //       console.log(error);
+  //       alert("Error occured while fetching photos. Please refresh again.")
+  //     }
+  //   }
+  //   getPhotos();
+  // }, [id])
 
-  console.log(photos);
+  // console.log(photos);
 
   if(!photos) return <div> No photos </div>
   return (
-    <div className="py-6">
+    <div className="py-4">
       <div className="flex justify-between bg-white sticky top-0 py-4">
-        <button className="shadow-md hover:bg-gray-100" onClick={()=>navigate(-1)}>
+        <button onClick={()=>setShowAllPhotos(false)} className="shadow-md hover:bg-gray-100" >
           {LeftArrowIcon}
         </button>
         <div className="flex gap-8">
@@ -42,29 +42,34 @@ const PhotoGallery = () => {
           </span>
         </div>
       </div>
-
-      <div className="py-4">
-
-        <div className="grid grid-cols-4 gap-2">
-          <div className=" items-center row-span-2 col-span-2 row-start-1"> 
-            <img className="w-full h-full" src={`http://localhost:4000/uploads/${photos[0]}`} alt="" />
+      
+        <div className="photoGrid grid gap-2">
+          <div className="items-center row-span-2 col-span-2"> 
+            <img className="w-full h-full object-cover" src={`http://localhost:4000/uploads/${photos[0]}`} alt="" />
           </div>
-          <div className=" items-center row-span-2 col-span-2 col-start-3"> 
-            <img className="w-full h-full" src={`http://localhost:4000/uploads/${photos[1]}`} alt="" />
+          <div className="items-center row-span-2 col-span-2"> 
+            <img className="w-full h-full object-cover" src={`http://localhost:4000/uploads/${photos[1]}`} alt="" />
           </div>
-          <div className=" items-center row-span-1 col-span-1 row-start-3"> 
-            <img className="w-full h-full aspect-square" src={`http://localhost:4000/uploads/${photos[2]}`} alt="" />
+          <div className=" items-center row-span-1 col-span-1"> 
+            <img className="w-full h-full object-cover " src={`http://localhost:4000/uploads/${photos[2]}`} alt="" />
           </div>
-          <div className=" items-center row-span-1 col-span-1 row-start-4"> 
-            <img className="w-full h-full aspect-square" src={`http://localhost:4000/uploads/${photos[3]}`} alt="" />
+          <div className=" items-center row-span-1 col-span-1"> 
+            <img className="w-full h-full object-cover" src={`http://localhost:4000/uploads/${photos[3]}`} alt="" />
           </div>
-          <div className=" items-center row-span-2 col-span-3 col-start-2"> 
-            <img className="w-full h-full" src={`http://localhost:4000/uploads/${photos[4]}`} alt="" />
+          <div className=" items-center row-span-2 col-span-2"> 
+            <img className="w-full h-full object-cover" src={`http://localhost:4000/uploads/${photos[4]}`} alt="" />
+          </div>
+          <div className=" items-center row-span-2 col-span-2"> 
+            <img className="w-full h-full object-cover" src={`http://localhost:4000/uploads/${photos[4]}`} alt="" />
+          </div>
+          <div className=" items-center col-span"> 
+            <img className="w-full h-full object-cover" src={`http://localhost:4000/uploads/${photos[3]}`} alt="" />
+          </div>
+          <div className=" items-center row-span-1 col-span-1"> 
+            <img className="w-full h-full object-cover " src={`http://localhost:4000/uploads/${photos[2]}`} alt="" />
           </div>
         </div>
-
-      </div>
-    </div>
+        </div>
   );
 };
 

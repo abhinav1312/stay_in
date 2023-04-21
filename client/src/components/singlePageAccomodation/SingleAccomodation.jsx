@@ -3,10 +3,11 @@ import {Link, useParams} from 'react-router-dom';
 import axios from 'axios'
 import { upperCase, capitalize } from 'lodash';
 import { ShareIcon, WishlistIcon } from '../../images/SVG';
+import PhotoGallery from './PhotoGallery';
 
 const SingleAccomodation = () => {
     const {id} = useParams();
-    // const [accomodation, setAccomodation] = useState(null);
+    const [showAllPhotos, setShowAllPhotos] = useState(false);
     const [accomodation, setAccomodation] = useState(null);
     useEffect(()=>{
       const getData = async()=>{
@@ -25,19 +26,10 @@ const SingleAccomodation = () => {
 
     if(!accomodation) return <div>LOL</div>
 
-    // let title, address, perks, photos, description, checkIn, checkOut, maxGuests, pricePerNight;
-
-    // if(accomodation){
-    //   title = upperCase(accomodation.title);
-    //   description = capitalize(accomodation.description);
-    //   perks = accomodation.perks;
-    //   photos = accomodation.photos;
-    //   checkIn = accomodation.checkIn;
-    //   checkOut = accomodation.checkOut;
-    //   maxGuests = accomodation.maxGuests;
-    //   address = accomodation.address;
-    //   pricePEr
-    // }
+   
+    if(showAllPhotos){
+      return <PhotoGallery photos={accomodation.photos} setShowAllPhotos={setShowAllPhotos} />
+    }
 
 
   return (
@@ -57,7 +49,7 @@ const SingleAccomodation = () => {
         </div>
       </div>
 
-      <Link to={`/${accomodation.id}/photos`} className="grid grid-cols-[2fr_1fr_1fr] grid-rows-2 py-4">
+      <div onClick={()=>setShowAllPhotos(true)} className="grid grid-cols-[2fr_1fr_1fr] grid-rows-2 py-4 cursor-pointer">
         <div className='row-span-2 mr-2 my-0'>
           <img className='h-full w-full object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
         </div>
@@ -73,7 +65,7 @@ const SingleAccomodation = () => {
         <div className='ml-1 mt-1'>
           <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[4]}`} alt="" />
         </div>
-      </Link>
+      </div>
     </div>
   )
 }

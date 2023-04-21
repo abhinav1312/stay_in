@@ -1,5 +1,6 @@
+
 import React, { useEffect, useState } from 'react'
-import {Link, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import axios from 'axios'
 import { upperCase, capitalize } from 'lodash';
 import { ShareIcon, WishlistIcon } from '../../images/SVG';
@@ -34,7 +35,7 @@ const SingleAccomodation = () => {
 
   return (
     <div className='mt-8'>
-      <h1 className='text-2xl text-justify [word-spacing:.4rem] tracking-wide'>{upperCase(accomodation.title)}</h1>
+      <h1 className='text-2xl font-medium text-justify [word-spacing:.4rem] tracking-wide'>{upperCase(accomodation.title)}</h1>
       <div className='flex justify-between py-1'>
         <a className='font-medium underline cursor-pointer' target='_blank' rel='noreferrer'  href={`https://maps.google.com/?q=${accomodation.address.city}`}> {capitalize(accomodation.address.city)}, {capitalize(accomodation.address.country)}  </a>
         <div className='flex gap-8'>
@@ -49,21 +50,26 @@ const SingleAccomodation = () => {
         </div>
       </div>
 
-      <div onClick={()=>setShowAllPhotos(true)} className="grid grid-cols-[2fr_1fr_1fr] grid-rows-2 py-4 cursor-pointer">
-        <div className='row-span-2 mr-2 my-0'>
-          <img className='h-full w-full object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
+      <div onClick={()=>setShowAllPhotos(true)} className="grid md:grid-cols-3 grid-rows-2 py-4 cursor-pointer gap-2 ">
+        <div className='row-span-2 col-span-2 hover:opacity-80'>
+          <img className='h-full object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[0]}`} alt="" />
         </div>
-        <div className='mb-1 mr-1'>
-          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[1]}`} alt="" />
+        <div className='hover:opacity-80'>
+          <img className='h-full object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[1]}`} alt="" />
         </div>
-        <div className='ml-1 mb-1'>
-          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[2]}`} alt="" />
+        <div className='hover:opacity-80'>
+          <img className='h-full object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[2]}`} alt="" />
         </div>
-        <div className='col-start-2 mt-1 mr-1'>
-          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[3]}`} alt="" />
-        </div>
-        <div className='ml-1 mt-1'>
-          <img className='aspect-square object-cover' src={`http://localhost:4000/uploads/${accomodation.photos[4]}`} alt="" />
+      </div>
+
+      <div className='max-w-3xl'>
+        <div className='grid grid-rows-2 grid-cols-2 justify-between'>
+          <h2 className=' text-xl font-medium col-span-1 row-span-1'>Farm stay hosted by "Hostname"</h2>
+          <span className='row-start-2 col-span-1 row-span-1 flex gap-8'> {accomodation.maxGuests} guests &middot; 2 bedrooms &middot; 3 beds &middot; 4 bathroomsd  </span>
+          <div className='row-span-2 items-end'>
+            <div className="w-12 h-full bg-gray-500 rounded-full"></div>
+          </div>
+
         </div>
       </div>
     </div>

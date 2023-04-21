@@ -25,7 +25,6 @@ const IndexPage = () => {
       accomodations.map(accomodation=>{
         return <AccomodationCard key = {accomodation._id} accDetails = {accomodation} />
       })
-
      }
       </div>
 

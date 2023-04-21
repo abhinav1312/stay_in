@@ -3,8 +3,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import {useParams} from 'react-router-dom';
 import axios from 'axios'
 import { upperCase, capitalize } from 'lodash';
-import { DoubleBedIcon, EntryIcon, FlagIcon, RadioIcon, ShareIcon, SingleBedIcon, TruckIcon, TvIcon, WifiIcon, WishlistIcon } from '../../images/SVG';
+import { DoubleBedIcon, EntryIcon, FlagIcon, RadioIcon, RightIcon, ShareIcon, SingleBedIcon, TruckIcon, TvIcon, WifiIcon, WishlistIcon } from '../../images/SVG';
 import PhotoGallery from './PhotoGallery';
+import Modal from './Modal';
 
 const SingleAccomodation = () => {
     const {id} = useParams();
@@ -12,6 +13,7 @@ const SingleAccomodation = () => {
     const [fullDesc, setFullDesc] = useState(false);
     const [showAllPhotos, setShowAllPhotos] = useState(false);
     const [accomodation, setAccomodation] = useState(null);
+    const [showModal, setShowModal] = useState(false);
     useEffect(()=>{
       const getData = async()=>{
         if(!id) return;
@@ -27,18 +29,14 @@ const SingleAccomodation = () => {
       getData();
     }, [id])
 
-    const showFullDesc = () => {
-      setFullDesc(true);
-    }
+
 
     if(!accomodation) return <div>LOL</div>
     if(showAllPhotos){
       return <PhotoGallery photos={accomodation.photos} setShowAllPhotos={setShowAllPhotos} />
     }
-
-
   return (
-    <div className='mt-8'>
+    <div className={`mt-8 ${showModal?'pointer-events-none' : ''}`}>
       <h1 className='text-2xl font-medium text-justify [word-spacing:.4rem] tracking-wide'>{upperCase(accomodation.title)}</h1>
       <div className='flex justify-between py-1'>
         <a className='font-medium underline cursor-pointer' target='_blank' rel='noreferrer'  href={`https://maps.google.com/?q=${accomodation.address.city}`}> {capitalize(accomodation.address.city)}, {capitalize(accomodation.address.country)}  </a>
@@ -67,7 +65,6 @@ const SingleAccomodation = () => {
       </div>
 
       <div className='max-w-2xl'>
-
         <div className='grid grid-rows-2 grid-cols-2 gap-1'>
           <h2 className=' text-xl font-medium col-span-1 row-span-1'>Farm stay hosted by "Hostname"</h2>
           <span className='row-start-2 col-span-1 row-span-1 flex gap-8 text-gray-500'> {accomodation.maxGuests} guests &middot; 2 bedrooms &middot; 3 beds &middot; 4 bathrooms  </span>
@@ -86,7 +83,7 @@ const SingleAccomodation = () => {
             <button onClick={()=>setFullDesc(false)} className='mt-4 bg-primary text-white' >See less</button>
             :
             <button onClick={()=>setFullDesc(true)} className='mt-4 bg-primary text-white' >See more</button>
-
+            
           }
         </div>
 
@@ -109,7 +106,7 @@ const SingleAccomodation = () => {
 
         <div>
           <h2 className='text-xl font-medium'> What this place offers </h2>
-          <div className='my-4 grid grid-cols-2 gap-6'>
+          <div className='my-4 grid grid-cols-2 gap-6 font-light'>
             <span className={`${accomodation.perks.includes('air conditioner')? '' : 'line-through text-gray-500' } flex gap-2`}> {FlagIcon} Air Conditioner </span>
             <span className={`${accomodation.perks.includes('pets')? '' : 'line-through text-gray-500' } flex gap-2`} > {EntryIcon} Pets allowed </span>
             <span className={`${accomodation.perks.includes('wifi')? '' : 'line-through text-gray-500' } flex gap-2`} > {WifiIcon} Wifi  </span>
@@ -118,10 +115,34 @@ const SingleAccomodation = () => {
             <span className={`${accomodation.perks.includes('tv')? '' : 'line-through text-gray-500' } flex gap-2`} > {TvIcon} Television </span>
           </div>
         </div>
-
         <hr className='my-8 border-gray-300' />
-
       </div>
+
+        <div className='w-full'>
+          <h2 className='text-xl font-medium'> Things to know </h2>
+          <div className="grid md:grid-cols-3 justify-between pt-4">
+            <div>
+              <h3 className='text-lg font-medium pb-2'>House rules</h3>
+              <ul className='flex flex-col gap-2 font-light'>
+                <li>Check-in after {accomodation.checkIn}</li>
+                <li>Check-out before {accomodation.checkOut}</li>
+                <li>{accomodation.maxGuests} guests maximum</li>
+                <li> {accomodation.perks.includes('pets') ? 'Pets allowed' : 'Pets not allowed'} </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className='text-lg font-medium pb-2'>Safety and property</h3>
+              <ul className='flex flex-col gap-2 font-light'>
+                <li>Carbon monoxide alarm not reported</li>
+                <li>Smoke alarm not reported</li>
+                <li>Security camera/recording device</li>
+
+                <button onClick={()=>setShowModal(true)} className='font-medium max-w-fit pl-0 flex gap-1 items-center underline'>Show more {RightIcon}</button>
+                {showModal && <Modal setShowModal={setShowModal} />}
+              </ul>
+            </div>
+          </div>
+        </div>
     </div>
   )
 }

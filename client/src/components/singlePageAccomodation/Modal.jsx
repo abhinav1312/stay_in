@@ -1,5 +1,6 @@
 import React from 'react'
 
+// modal to popup
 const Modal = ({setShowModal}) => {
   return (
     <div className='absolute inset-0 top-[-215%]  bg-black opacity-60'>

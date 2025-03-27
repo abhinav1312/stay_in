@@ -357,7 +357,20 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
-app.get("/", (req, res) => res.json({ message: "API is working!" }));
+// app.get("/", (req, res) => res.json({ message: "API is working!" }));
+
+app.get('/', async(req, res)=>{
+  try{
+    const allAccomodations = await Accomodation.find();
+    res.json(allAccomodations);
+  }
+  catch(error){
+    console.log(error);
+    console.log("Some error occured");
+    res.json({error: error});
+  }
+})
+
 
 app.post("/register", async (req, res) => {
     try {

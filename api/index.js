@@ -38,10 +38,17 @@ app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
   cors({
+    origin: ['http://localhost:3000', 'https://stay-in-beta.vercel.app'],
     credentials: true,
-    origin: "http://localhost:3000",
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: '*',
+    exposedHeaders: ['set-cookie'],
+    maxAge: 86400,
+    preflightContinue: true,
+    optionsSuccessStatus: 200
   })
 );
+
 
 mongoose
   .connect(process.env.MONGO_URL, {

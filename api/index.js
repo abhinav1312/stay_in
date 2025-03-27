@@ -14,7 +14,7 @@ const { getStorage } = require('firebase/storage');
 const { ref, getDownloadURL, uploadBytesResumable } = require('firebase/storage');
 // import { initializeApp } from "firebase/app";
 const {initializeApp} = require('firebase/app')
-const port = process.env.port || 4000;
+const port = process.env.PORT || 4000;
 // import config from './firebaseConfig'
 const config = require('./firebaseConfig');
 // initialize firebase configuration

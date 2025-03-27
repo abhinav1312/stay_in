@@ -27,20 +27,17 @@ const upload = multer({ dest: "uploads" });
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = process.env.JWT_SECRET;
 
-// Ensure MongoDB Connection
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB Connection Established");
-  } catch (error) {
-    console.error("MongoDB Connection Failed:", error);
-  }
-};
-
-connectDB();
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connection established");
+  })
+  .catch((err) => {
+    console.log(("Connection unsuccessfull", err));
+  });
 
 
 app.get("/", async (req, res) => {

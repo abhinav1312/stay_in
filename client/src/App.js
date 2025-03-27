@@ -15,7 +15,8 @@ import AccomodationList from "./components/accountPage/accomodation/accomodation
 import SingleAccomodation from "./components/singlePageAccomodation/SingleAccomodation";
 import PhotoGallery from "./components/singlePageAccomodation/PhotoGallery";
 
-axios.defaults.baseURL = 'http://localhost:4000'
+// axios.defaults.baseURL = 'http://localhost:4000'
+axios.defaults.baseURL = 'https://stay-in-ipf3.vercel.app'
 axios.defaults.withCredentials = true;
 
 function App() {

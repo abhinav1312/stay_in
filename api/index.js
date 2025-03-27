@@ -37,12 +37,12 @@ const photoMiddleware = multer({ dest: "uploads" });
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use(
-  cors({
-    origin: 'https://stay-in-beta.vercel.app',
-    credentials: true
-  })
-);
+// app.use(
+//   cors({
+//     origin: 'https://stay-in-beta.vercel.app',
+//     credentials: true
+//   })
+// );
 
 
 mongoose

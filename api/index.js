@@ -14,6 +14,7 @@ const { getStorage } = require('firebase/storage');
 const { ref, getDownloadURL, uploadBytesResumable } = require('firebase/storage');
 // import { initializeApp } from "firebase/app";
 const {initializeApp} = require('firebase/app')
+const port = process.env.port || 4000;
 // import config from './firebaseConfig'
 const config = require('./firebaseConfig');
 // initialize firebase configuration
@@ -38,14 +39,8 @@ app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://stay-in-beta.vercel.app'],
-    credentials: true,
-    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-    allowedHeaders: '*',
-    exposedHeaders: ['set-cookie'],
-    maxAge: 86400,
-    preflightContinue: true,
-    optionsSuccessStatus: 200
+    origin: 'https://stay-in-beta.vercel.app',
+    credentials: true
   })
 );
 
@@ -339,6 +334,6 @@ app.post('/update_accomodation', (req, res)=>{
   })
 })
 
-app.listen(4000, () => {
+app.listen(port, () => {
   console.log("Server listening on port 4000");
 });
